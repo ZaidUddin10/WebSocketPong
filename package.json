@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "Pong Browser Game using Sockets in HTML5 and js.",
     "dependencies": {
-        "express": "^4.15.2"
+        "express": "^4.15.2",
+        "socket.io": "^2.2.0"
     }
 }
