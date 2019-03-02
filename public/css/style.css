@@ -20,7 +20,7 @@ header{
 }
 
 header #title{
-    float: right;
+    float: center;
 }
 
 header #title h1{

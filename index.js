@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 
 app.use(express.static(publicPath));
 
-
 server.listen(PORT, () => {
     console.log(`server is up on port ${PORT}`)
 });
@@ -30,7 +29,7 @@ server.listen(PORT, () => {
 io.on('connection', (socket) => {
     console.log('New User Connected!');
 
-    socket.on('join', (params, cb) => {
+    /*socket.on('join', (params, cb) => {
 
         if (!isRealString(params.name) || !isRealString(params.room)) {
             return cb('Name and Room Name are required');
@@ -48,28 +47,5 @@ io.on('connection', (socket) => {
         socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined!`));
 
         cb();
-    });
-
-    socket.on('createMessage', (message, cb) => {
-        var user = users.getUser(socket.id);
-        if (user && isRealString(message.text)) {
-            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
-        }
-        cb();
-    });
-
-    socket.on('createLocationMessage', (coords) => {
-        var user = users.getUser(socket.id);
-        if (user) {
-            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
-        }
-    });
-
-    socket.on('disconnect', () => {
-        var user = users.removeUser(socket.id);
-        if (user) {
-            io.to(user.room).emit('updateUserList', users.getUserList(user.room));
-            io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
-        }
-    });
+    });*/
 });
