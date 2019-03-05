@@ -30,29 +30,25 @@ var players = {};
 
 io.on('connection', function(socket) {
 
-  /* When a user connects, set their x,y coordinates at 300,300. */
-  socket.on('new player', function() {
-    players[socket.id] = {
-      x: 300,
-      y: 300
-    };
-  });
+  socket.on('join', (params, cb) => {
 
-  /* */
-  socket.on('movement', function(data) {
-    var player = players[socket.id] || {};
-    if (data.left) {
-      player.x -= 5;
+    if (!isRealString(params.name) || !isRealString(params.room)) {
+        return cb('Name and Room Name are required');
     }
-    if (data.up) {
-      player.y -= 5;
-    }
-    if (data.right) {
-      player.x += 5;
-    }
-    if (data.down) {
-      player.y += 5;
-    }
+    params.room = params.room.trim();
+    params.name = params.name.trim();
+
+    socket.join(params.room);
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, params.room);
+
+    console.log('Holy Fuck');
+
+    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    socket.broadcast.to(params.room).emit('new player');
+    //socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined!`));
+
+    cb();
   });
 });
 

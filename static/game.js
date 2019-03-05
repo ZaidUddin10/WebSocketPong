@@ -42,10 +42,35 @@ var movement = {
     }
   });
 
-  socket.emit('new player');
-setInterval(function() {
-  socket.emit('movement', movement);
-}, 1000 / 60);
+  /* When a user connects, set their x,y coordinates at 300,300. */
+  socket.on('new player', function() {
+    console.log("Holy Fuck");
+    players[socket.id] = {
+      x: 300,
+      y: 300
+    };
+  });
+
+  /* */
+  socket.on('movement', function(data) {
+    var player = players[socket.id] || {};
+    if (data.left) {
+      player.x -= 5;
+    }
+    if (data.up) {
+      player.y -= 5;
+    }
+    if (data.right) {
+      player.x += 5;
+    }
+    if (data.down) {
+      player.y += 5;
+    }
+  });
+
+  setInterval(function() {
+    socket.emit('movement', movement);
+  }, 1000 / 60);
 
 var canvas = document.getElementById('canvas');
 canvas.width = 800;
