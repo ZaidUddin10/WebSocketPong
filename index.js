@@ -5,6 +5,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const {Users} = require('./utils/users');
+const {isRealString} = require('./utils/validation');
 const PORT = process.env.PORT || 3000;
 const publicPath = path.join(__dirname, '/public');
 
@@ -42,13 +43,13 @@ io.on('connection', function(socket) {
     users.removeUser(socket.id);
     users.addUser(socket.id, params.name, params.room);
 
-    console.log('Holy Fuck');
+    console.log('Not Holy Fuck');
 
-    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    socket.broadcast.to(params.room).emit('new player');
-    //socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined!`));
+    //io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    socket.to(params.room).emit('new player');
+    //socket.broadcast.to(params.room).emit('newMessassge', generateMessage('Admin', `${params.name} has joined!`));
 
-    cb();
+    cb(); 
   });
 });
 
