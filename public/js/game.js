@@ -14,6 +14,8 @@ socket.on('connect', function () {
   });
 });
 
+socket.emit('foo', 'Hello World!');
+
 socket.on('disconnect', function () {
   console.log('disconnected to the server!');
 });

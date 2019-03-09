@@ -28,7 +28,7 @@ server.listen(PORT, () => {
 
 var players = {};
 
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
 
   socket.on('join', (params, cb) => {
 
@@ -45,10 +45,13 @@ io.on('connection', function(socket) {
     console.log('Not Holy Stuff');
 
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    //socket.to(params.room).emit('new player');
     //socket.broadcast.to(params.room).emit('newMessassge', generateMessage('Admin', `${params.name} has joined!`));
 
     cb(); 
+  });
+
+  socket.on('foo', function(data){
+    console.log(data);
   });
 
   socket.on('disconnect', () => {
@@ -58,8 +61,12 @@ io.on('connection', function(socket) {
         console.log('disconnected to the server!');
     }
   });
+
+  socket.emit('new player', players);
+
+  setInterval(function() {
+    socket.emit('state', players);
+  }, 1000 / 60);
+
 });
 
-setInterval(function() {
-  io.sockets.emit('state', players);
-}, 1000 / 60);
