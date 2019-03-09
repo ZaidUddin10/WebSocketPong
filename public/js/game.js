@@ -1,9 +1,10 @@
 var socket = io();
 
 socket.on('connect', function () {
+  console.log("Holy Stuff");
   var params = jQuery.deparam(window.location.search);
   socket.emit('join', params, function (err) {
-    console.log("Holy Fuck");
+    console.log("Holy Stuff");
       if (err) {
           alert(err);
           window.location.href = '/';
@@ -83,6 +84,7 @@ socket.on('disconnect', function () {
   });
 
   socket.on('updateUserList', function (users) {
+    console.log("Hi!");
     var ol = jQuery('<ol></ol>');
     users.forEach(function (user) {
         ol.append(jQuery('<li></li>').text(user));

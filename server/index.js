@@ -7,7 +7,7 @@ const socketIO = require('socket.io');
 const {Users} = require('./utils/users');
 const {isRealString} = require('./utils/validation');
 const PORT = process.env.PORT || 3000;
-const publicPath = path.join(__dirname, '/public');
+const publicPath = path.join(__dirname, '../public');
 
 var app = express();
 var server = http.createServer(app);
@@ -20,7 +20,6 @@ app.get('/', (req, res) => {
     res.render('index', {rooms: users.getRoomList()});
 });
 
-app.use('/static', express.static(__dirname + '/static')); //Use static dir
 app.use(express.static(publicPath)); //Use public dir using the publicpath variable
 
 server.listen(PORT, () => {
@@ -46,7 +45,7 @@ io.on('connection', function(socket) {
     console.log('Not Holy Stuff');
 
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    socket.to(params.room).emit('new player');
+    //socket.to(params.room).emit('new player');
     //socket.broadcast.to(params.room).emit('newMessassge', generateMessage('Admin', `${params.name} has joined!`));
 
     cb(); 

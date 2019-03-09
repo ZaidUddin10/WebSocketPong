@@ -2,6 +2,10 @@
     "name": "socket-pong",
     "version": "0.0.1",
     "description": "Pong Browser Game using Sockets in HTML5 and js.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server/server.js"
+    },
     "dependencies": {
         "ejs": "^2.6.1",
         "express": "^4.15.2",
