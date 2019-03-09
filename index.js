@@ -43,13 +43,21 @@ io.on('connection', function(socket) {
     users.removeUser(socket.id);
     users.addUser(socket.id, params.name, params.room);
 
-    console.log('Not Holy Fuck');
+    console.log('Not Holy Stuff');
 
-    //io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
     socket.to(params.room).emit('new player');
     //socket.broadcast.to(params.room).emit('newMessassge', generateMessage('Admin', `${params.name} has joined!`));
 
     cb(); 
+  });
+
+  socket.on('disconnect', () => {
+    var user = users.removeUser(socket.id);
+    if (user) {
+        io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+        console.log('disconnected to the server!');
+    }
   });
 });
 

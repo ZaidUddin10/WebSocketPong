@@ -3,6 +3,7 @@ var socket = io();
 socket.on('connect', function () {
   var params = jQuery.deparam(window.location.search);
   socket.emit('join', params, function (err) {
+    console.log("Holy Fuck");
       if (err) {
           alert(err);
           window.location.href = '/';
@@ -12,7 +13,11 @@ socket.on('connect', function () {
   });
 });
 
-var movement = {
+socket.on('disconnect', function () {
+  console.log('disconnected to the server!');
+});
+
+  var movement = {
     up: false,
     down: false,
     left: false,
@@ -75,6 +80,15 @@ var movement = {
     if (data.down) {
       player.y += 5;
     }
+  });
+
+  socket.on('updateUserList', function (users) {
+    var ol = jQuery('<ol></ol>');
+    users.forEach(function (user) {
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
   });
 
   setInterval(function() {
