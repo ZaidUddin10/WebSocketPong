@@ -14,7 +14,22 @@ socket.on('connect', function () {
   });
 });
 
+socket.emit('join', params, function (err) {
+  console.log("Holy Stuff");
+   
+});
+
 socket.emit('foo', 'Hello World!');
+
+var canvas = document.getElementById('canvas');
+canvas.width = 800;
+canvas.height = 600;
+var context = canvas.getContext('2d');
+
+socket.emit('what', function () {
+  context.clearRect(0, 0, 800, 600);
+  context.fillStyle = 'green';
+});
 
 socket.on('disconnect', function () {
   console.log('disconnected to the server!');
@@ -99,7 +114,7 @@ socket.on('disconnect', function () {
     socket.emit('movement', movement);
   }, 1000 / 60);
 
-var canvas = document.getElementById('canvas');
+/*var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
@@ -112,4 +127,4 @@ socket.on('state', function(players) {
     context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
     context.fill();
   }
-});
+});*/

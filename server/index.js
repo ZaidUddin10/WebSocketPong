@@ -11,7 +11,7 @@ const publicPath = path.join(__dirname, '../public');
 
 var app = express();
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+var io = socketIO(server);
 var users = new Users();
 
 app.set('view engine', 'ejs'); //Use ejs engine
@@ -54,6 +54,8 @@ io.on('connection', (socket) => {
     console.log(data);
   });
 
+  socket.on('what', function(){});
+
   socket.on('disconnect', () => {
     var user = users.removeUser(socket.id);
     if (user) {
@@ -61,8 +63,6 @@ io.on('connection', (socket) => {
         console.log('disconnected to the server!');
     }
   });
-
-  socket.emit('new player', players);
 
   setInterval(function() {
     socket.emit('state', players);
