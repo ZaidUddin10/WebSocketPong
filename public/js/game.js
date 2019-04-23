@@ -1,7 +1,6 @@
 var socket = io();
 
-socket.on('connect', function () {
-  console.log("Holy Stuff");
+function joinGame () {
   var params = jQuery.deparam(window.location.search);
   socket.emit('join', params, function (err) {
     console.log("Holy Stuff");
@@ -12,12 +11,7 @@ socket.on('connect', function () {
           console.log('no error!');
       }
   });
-});
-
-socket.emit('join', params, function (err) {
-  console.log("Holy Stuff");
-   
-});
+}
 
 socket.emit('foo', 'Hello World!');
 

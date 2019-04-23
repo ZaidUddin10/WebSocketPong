@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
     console.log(data);
   });
 
-  socket.on('what', function(){});
+  //socket.on('what', function(){});
 
   socket.on('disconnect', () => {
     var user = users.removeUser(socket.id);
